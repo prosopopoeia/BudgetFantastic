@@ -3,7 +3,7 @@
 {% block header_text %}Fantastic.{% endblock %}
 {% block name_text %} Hello {{ users_name }} {% endblock %}
 
-{% block form_action2 %}"name"{% endblock %}
+{% block form_action %}../setup/{% endblock %}
 {% block form_two %}
 {% csrf_token %}
 {{ form }}
