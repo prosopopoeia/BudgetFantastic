@@ -1,10 +1,9 @@
 {% extends 'fantasticApp/base.html' %}
 
 {% block header_text %}Fantastic.{% endblock %}
-{% block name_text %} Hello {{ users_name }} {% endblock %}
-
-{% block form_action %}../setup/{% endblock %}
+{% block name_text %} Hello {{ user.user_name }} {% endblock %}
+{{ form_one }}
+{% block form_action %}/fantasticApp/setup/{% endblock %}
 {% block form_two %}
-{% csrf_token %}
-{{ form }}
+{{ form_two }}
 {% endblock %}
