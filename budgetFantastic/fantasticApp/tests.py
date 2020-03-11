@@ -25,5 +25,5 @@ class BasicTests(TestCase):
         self.assertEqual(this_users_name.user_name, 'kimbal')
         
         
-    # def test_can_create_category(self):   
-         # self.clent.post('/fantasticApp
+    def test_can_create_category(self):   
+         self.clent.post('/fantasticApp/newcat

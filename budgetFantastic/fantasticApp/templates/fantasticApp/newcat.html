@@ -1,7 +1,8 @@
 {% extends 'fantasticApp/base.html' %}
 
-{% block header_text %}Famous Budget Application - start a new list{% endblock %}
-{% block name_text %} {{ users_name }}, set up via keystroke. {% endblock %}
-{% block optional_item2 %}{{ new_cat.category_name }}{% endblock %}
-{% block form_action %}/fantasticApp/newcat{% endblock %}
-{% block optional_item %}<button name='new_cat' type=submit action=POST>{% endblock %}
+{% block header_text %}Famous Budget Application {% endblock %}
+{% block name_text %} {{ user_name }} Added Category {% endblock %}
+{% block form_one %}{{ form_one }}{% endblock %}
+{% block optional_item2 %}{{ new_cat }}{% endblock %}
+{% block form_action %}/fantasticApp/newcat/{% endblock %}
+{% block optional_item %}<button name='new_cat' type=submit  value="press" action=POST>{% endblock %}

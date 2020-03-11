@@ -24,15 +24,24 @@ class UserUsesApp(StaticLiveServerTestCase):
         #-cat name
     #page displays category with 'add' button (to record category transaction)
     def test_new_user_create_new_cat(self):
-        self.selenium.get(self.live_server_url)
-        cat_name_input = self.selenium.find_element_by_id('id_new_item')
-        new_cat = 'banking'
-        cat_name_input.send_keys(new_cat)
+        self.selenium.get('%s' % self.live_server_url)
+        time.sleep(5)
+        cat_name_input = self.selenium.find_element_by_name('category_name')
+        cat  = 'banking'
+        cat_name_input.send_keys(cat)
         cat_name_input.send_keys(Keys.ENTER)
         time.sleep(1)
-        cli = Client()
-        resp = cli.post('/fantasticApp/setup/', {'item_text': 'banking'})
-        self.assertEqual(self.selenium.page_source)
+        result = self.selenium.find_element_by_id('option2')
+        self.assertIn('banking', result)
+        # cli = Client()
+        # resp = cli.post('/fantasticApp/setup/', {'item_text': 'banking'})
+        # self.assertEqual(self.selenium.page_source)
+        
+    #User sees category added and is prompted for another or to add a transaction to existing Category
+    # def test_user_sees_cat_interface(self):
+        # self.selenium.get(self.live_server_url)
+        
+
         
        
      
@@ -40,7 +49,7 @@ class UserUsesApp(StaticLiveServerTestCase):
      #USER IS PRESENTED WITH A TEXTBOX,'CATERGORY' AND A 2ND, AMOUNT(BOTH BLANK) AND AN OPTION FOR ADDING ADDITIONAL CATEGORIES
     # def test_user_can_add_category(self):
         # self.selenium.get(self.live_server_url)
-        # nameInput = self.selenium.find_element_by_id('id_new_item')
+        # nameInput = self.selenium.find_element_by_id('users_name')
         # usersName = 'Rowan'
         # nameInput.send_keys(usersName)
         # nameInput.send_keys(Keys.ENTER)

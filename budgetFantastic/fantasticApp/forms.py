@@ -1,11 +1,11 @@
 from django import forms
 
 class NameForm(forms.Form):
-    item_text = forms.CharField(label='Enter information', max_length=100)
+    users_name = forms.CharField(label='Enter information', max_length=100)
     
     
 class AddCatForm(forms.Form):
-    category = forms.CharField(max_length=100)
+    category_name = forms.CharField(max_length=100)
    
 
     
