@@ -26,4 +26,6 @@ class BasicTests(TestCase):
         
         
     def test_can_create_category(self):   
-         self.clent.post('/fantasticApp/newcat
+         self.clent.post('/fantasticApp/newcat')
+         
+    

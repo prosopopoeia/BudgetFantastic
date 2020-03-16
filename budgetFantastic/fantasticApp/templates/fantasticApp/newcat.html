@@ -1,8 +1,8 @@
 {% extends 'fantasticApp/base.html' %}
 
 {% block header_text %}Famous Budget Application {% endblock %}
-{% block name_text %} {{ user_name }} Added Category {% endblock %}
+{% block name_text %} {{ user_name }}'s Added Category {% endblock %}
 {% block form_one %}{{ form_one }}{% endblock %}
 {% block optional_item2 %}{{ new_cat }}{% endblock %}
-{% block form_action %}/fantasticApp/newcat/{% endblock %}
+{% block form_action %} {%  url 'fantasticApp:newcat'  user_name 																	 %}{% endblock %}
 {% block optional_item %}<button name='new_cat' type=submit  value="press" action=POST>{% endblock %}
