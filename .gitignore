@@ -1,3 +1,5 @@
 virtualenv/
 featurns.txt
 erase.txt
+geckodrive.log
+*.sqlite3
