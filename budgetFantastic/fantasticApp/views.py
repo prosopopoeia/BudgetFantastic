@@ -31,11 +31,9 @@ class newcatView(generic.TemplateView):
         form_one = AddCatForm()
         cat_name = request.POST['category_name']
         user_=User.objects.get(user_name=user_name)
-        overall_ = Overall.objects.create(grandTotal=1, montlyTotal=2)
-        
+                
         new_category = Category()
         new_category.category_name = cat_name
-        new_category.overallTotals = overall_ 
         new_category.owningUser = user_   
         new_category.save()        
         return render(request, self.template_name, {'form_one' : form_one, 'new_cat' : cat_name, 'user_name' : user_name })  

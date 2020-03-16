@@ -39,10 +39,9 @@ class UserUsesApp(StaticLiveServerTestCase):
         time.sleep(1)
         
         result = self.selenium.find_element_by_id('option2')
-        self.assertIn('banking', result.text)
-        
+        self.assertIn('banking', result.text)        
         add_another_cat = self.selenium.find_element_by_name(add_new)
-        assertIsNotNone(add_another_cat)
+        assertIsNotNone       (add_another_cat)
         
     #User sees category added and is prompted for another 
     
