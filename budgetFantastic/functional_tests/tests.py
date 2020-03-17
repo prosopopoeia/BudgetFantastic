@@ -16,15 +16,35 @@ class UserUsesApp(StaticLiveServerTestCase):
         #super().tearDownClass()
         
     
-    #initial visit only:
-    #A user is invited to enter their user name (mainly for identification purposes)
+    # #initial visit only:
+    # #A user is invited to enter their user name (mainly for identification purposes)
      
-    ##IF (FIRST TIME USE)
-    #user sees fields to enter category, user enters
-        #-cat name
-    #page displays category with 'add' button (to record category transaction)
-    def test_new_user_create_new_cat(self):
+    # ##IF (FIRST TIME USE)
+    # #user sees fields to enter category, user enters
+        # #-cat name
+    # #page displays category with 'add' button (to record category transaction)
+    # def test_new_user_create_new_cat(self):
     
+        # self.selenium.get(self.live_server_url)
+        # nameInput = self.selenium.find_element_by_name('users_name')
+        # usersName = 'Rowan'
+        # nameInput.send_keys(usersName)
+        # nameInput.send_keys(Keys.ENTER)
+        # time.sleep(2)
+        
+        # cat_name_input = self.selenium.find_element_by_name('category_name')
+        # cat  = 'banking'
+        # cat_name_input.send_keys(cat)
+        # cat_name_input.send_keys(Keys.ENTER)        
+        # time.sleep(1)
+        
+        # result = self.selenium.find_element_by_id('option2')
+        # self.assertIn('banking', result.text)        
+     
+        
+    # #User sees category added and is prompted for another, adds one, 
+    # #and sees a list of both categories
+    def test_user_adds_categories_and_sees_list(self):
         self.selenium.get(self.live_server_url)
         nameInput = self.selenium.find_element_by_name('users_name')
         usersName = 'Rowan'
@@ -33,17 +53,20 @@ class UserUsesApp(StaticLiveServerTestCase):
         time.sleep(2)
         
         cat_name_input = self.selenium.find_element_by_name('category_name')
-        cat  = 'banking'
+        cat  = 'cat1'
         cat_name_input.send_keys(cat)
         cat_name_input.send_keys(Keys.ENTER)        
         time.sleep(1)
+          
+        cat_name_input2 = self.selenium.find_element_by_name('category_name')          
+        cat  = 'cat2'
+        cat_name_input2.send_keys(cat)
+        cat_name_input2.send_keys(Keys.ENTER)        
+        time.sleep(1)
         
-        result = self.selenium.find_element_by_id('option2')
-        self.assertIn('banking', result.text)        
-        add_another_cat = self.selenium.find_element_by_name(add_new)
-        assertIsNotNone       (add_another_cat)
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(Category.objects.count(), 2)
         
-    #User sees category added and is prompted for another 
     
     ##or to modify existing Category
     # def test_user_sees_cat_interface(self):

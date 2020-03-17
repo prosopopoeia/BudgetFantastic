@@ -38,6 +38,22 @@ class newcatView(generic.TemplateView):
         new_category.save()        
         return render(request, self.template_name, {'form_one' : form_one, 'new_cat' : cat_name, 'user_name' : user_name })  
         
+        
+class listcatView(generic.ListView):
+    template_name = 'fantasticApp/catlist.html'
+    model = Category    
+    def post(self, request, user_name):
+        form_one = AddCatForm()
+        cat_name = request.POST['category_name']
+        user_=User.objects.get(user_name=user_name)
+                
+        new_category = Category()
+        new_category.category_name = cat_name
+        new_category.owningUser = user_   
+        new_category.save()    
+        #cats =  User.objects.all()
+        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })         
+        
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'
     context_object_name = 'user'
