@@ -3,6 +3,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
 from  selenium.common.exceptions import WebDriverException
 from django.test import Client
+from fantasticApp.models import User, Category
 import time
 
 class UserUsesApp(StaticLiveServerTestCase):

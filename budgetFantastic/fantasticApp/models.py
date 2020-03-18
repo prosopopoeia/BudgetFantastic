@@ -26,4 +26,4 @@ class Entry(models.Model):
     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
     entry_note=models.CharField(default='',max_length=11)
     amount = models.DecimalField(default=0, max_digits=11, decimal_places=2)
-    transaction_date=models.DateTimeField('transaction date',default=timezone.now, blank=True)
+    transaction_date=models.DateTimeField('transaction date',default=timezone.now(), blank=True)
