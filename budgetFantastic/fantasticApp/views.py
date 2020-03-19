@@ -52,7 +52,17 @@ class listcatView(generic.ListView):
         new_category.owningUser = user_   
         new_category.save()    
         #cats =  User.objects.all()
-        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })         
+        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })        
+
+class catdetailView(generic.DetailView):
+    template_name = 'fantasticApp/catdetail.html'
+    
+    def post(self, request, category_name):
+        form_one = AddCatForm()
+        cat_name = 'test'
+                     
+        
+        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name })                
         
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'

@@ -27,4 +27,5 @@ urlpatterns = [
     path('fantasticApp/setup/', views.setupView.as_view(), name='setup'),
     path('fantasticApp/newcat/<str:user_name>/', views.newcatView.as_view(), name='newcat'),
     path('fantasticApp/listcat/<str:user_name>/', views.listcatView.as_view(), name='listcat'),
+    path('fantasticApp/catdetail/<str:category_name>/', views.catdetailView.as_view(), name='catdetail'),
 ]

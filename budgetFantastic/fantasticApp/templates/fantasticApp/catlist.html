@@ -7,7 +7,12 @@
 <table id="id_list_cats" class="table">
 	{% for cat in current_user.category_set.all %}
 	<tr>
-		<td> {{ cat.category_name }} </td>
+		<td>
+			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}">
+				{{ cat.category_name }}  <input type="submit" value="Category Detail" name="cat_detail" id="id_cat_detail">
+				{% csrf_token %}
+			</form>
+		</td>
 	</tr>
 	{% endfor %}
 </table>
