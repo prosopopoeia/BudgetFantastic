@@ -4,8 +4,13 @@
 {% block name_text %} {{ user_name }}'s Added Category {% endblock %}
 {% block form_one %}{{ form_one }}{% endblock %}
 {% block optional_item2 %}
-<table id="id_list_cats" class="table">
-	{% for cat in current_user.category_set.all %}
+<!-- <table id="id_list_cats" class="table"> -->
+	
+<!-- </table> -->
+{% endblock %}
+
+{% block list_loop %} 
+    {% for cat in current_user.category_set.all %}
 	<tr>
 		<td>
 			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}">
@@ -14,8 +19,5 @@
 			</form>
 		</td>
 	</tr>
-	{% endfor %}
-</table>
+    {% endfor %}
 {% endblock %}
-{% block form_action %} {%  url 'fantasticApp:listcat'  user_name  %}{% endblock %}
-
