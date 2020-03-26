@@ -13,7 +13,7 @@
     {% for cat in current_user.category_set.all %}
 	<tr>
 		<td>
-			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}">
+			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}">
 				{{ cat.category_name }}  <input type="submit" value="Category Detail" name="cat_detail" id="id_cat_detail">
 				{% csrf_token %}
 			</form>

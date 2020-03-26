@@ -59,10 +59,9 @@ class catdetailView(generic.DetailView):
     
     def post(self, request, category_name):
         form_one = AddCatForm()
-        cat_name = 'test'
-                     
-        
-        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name })                
+        user_ = request.GET['user_name']
+        cat_name = category_name
+        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name, 'user_name' : user_ })                
         
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'

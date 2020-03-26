@@ -45,34 +45,37 @@ class UserUsesApp(StaticLiveServerTestCase):
         
     # #User sees category added and is prompted for another, adds one, 
     # #and sees a list of both categories
-    def test_user_adds_categories_and_sees_list(self):
-        self.selenium.get(self.live_server_url)
-        nameInput = self.selenium.find_element_by_name('users_name')
-        usersName = 'Rowan'
-        nameInput.send_keys(usersName)
-        nameInput.send_keys(Keys.ENTER)
-        time.sleep(2)
+    # def test_user_adds_categories_and_sees_list(self):
+        # self.selenium.get(self.live_server_url)
+        # nameInput = self.selenium.find_element_by_name('users_name')
+        # usersName = 'Rowan'
+        # nameInput.send_keys(usersName)
+        # nameInput.send_keys(Keys.ENTER)
+        # time.sleep(2)
         
-        cat_name_input = self.selenium.find_element_by_name('category_name')
-        cat  = 'cat1'
-        cat_name_input.send_keys(cat)
-        cat_name_input.send_keys(Keys.ENTER)        
-        time.sleep(1)
+        # cat_name_input = self.selenium.find_element_by_name('category_name')
+        # cat  = 'cat1'
+        # cat_name_input.send_keys(cat)
+        # cat_name_input.send_keys(Keys.ENTER)        
+        # time.sleep(1)
           
-        cat_name_input2 = self.selenium.find_element_by_name('category_name')          
-        cat  = 'cat2'
-        cat_name_input2.send_keys(cat)
-        cat_name_input2.send_keys(Keys.ENTER)        
-        time.sleep(1)
+        # cat_name_input2 = self.selenium.find_element_by_name('category_name')          
+        # cat  = 'cat2'
+        # cat_name_input2.send_keys(cat)
+        # cat_name_input2.send_keys(Keys.ENTER)        
+        # time.sleep(1)
         
-        self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(Category.objects.count(), 2)
+        # self.assertEqual(User.objects.count(), 1)
+        # self.assertEqual(Category.objects.count(), 2)
         
     
-    ##or to modify existing Category
-    # def test_user_sees_cat_interface(self):
-        # self.selenium.get(self.live_server_url)
-        
+    ##User clicks button to add transaction
+    ##User sees category transaction page: Cat name, monthly total, and crud options
+    def test_user_sees_cat_interface(self):
+        self.selenium.get(
+            '%s%s' % (self.live_server_url, "/fantasticApp/catlist/brick/")
+        )
+        time.sleep(3)
         ##TBDDDDD
     # def test_user_can_modify category(self):
         # self.selenium.get(self.live_server_url)
