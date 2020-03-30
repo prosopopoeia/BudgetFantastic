@@ -23,16 +23,19 @@
             <form method="POST" action="{% block form_action %}{% endblock %}">
 		{% csrf_token %}
 		{% block form_one %}{% endblock %}
-		<input type="submit" value="add">		  
+		{% block button_one %}{% endblock %}
+				  
             </form>
-	<div id='option2'>{% block optional_item2 %}{{ new_cat }}{% endblock %}		</div>
-	<form method="POST" action="{% block add_cat %}{% endblock %}">
-		{% csrf_token %}
-		{% block optional_item %}{% endblock %}
-			
-	 </form>
+	<div id='option2'>{% block optional_item2 %}{% endblock %}		</div>
+	
           </div>
         </div>
+         <div class="col-md-30 jumbotron">
+		<form method="POST" action="{% block optional_action %}{% endblock %}">
+		{% csrf_token %}
+		{% block optional_item %}{% endblock %}
+		</form>
+	</div>
       </div>
 	<div class="jumbotron">
 		<table id="id_list_cats" class="table">
@@ -46,6 +49,7 @@
           <form method="POST" action="{% block form_action2 %}{% endblock %}">
 		  {% csrf_token %}
 		  {% block form_two %}{% endblock %}
+		  {% block button_two %}{% endblock %}
 	</form>
 	{% block table %} {% endblock %}
 		  

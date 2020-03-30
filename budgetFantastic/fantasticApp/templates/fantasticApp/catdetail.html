@@ -2,8 +2,10 @@
 
 {% block header_text %}Famous Budget Application {% endblock %}
 {% block name_text %} {{ category_name }} - {{ user_name }}{% endblock %}
-{% block form_one %}{{ form_one }}{% endblock %}
+
 {% block optional_item2 %}{{ category_name }}{% endblock %}
 {% block form_action %} {% endblock %}
-{% block optional_item %}{{ category_name }}{% endblock %}
+{% block optional_action %}{% url 'fantasticApp:index'  %}{% endblock %}
+{% block optional_item %}{{ form_one }}{% endblock %}
+{% block button_two %}<input type="submit" value="record entry">{% endblock %}
 

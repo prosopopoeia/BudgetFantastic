@@ -20,10 +20,8 @@ from . import views
 app_name = 'fantasticApp'
 urlpatterns = [
     path('', views.indexView.as_view(), name='index'),
-   ## path('detail/', views.otherView.as_view(), name='detail'),
     path('fantasticApp/detail/', views.otherView.as_view(), name='detail'),
     path('fantasticApp/getname/', views.getNameView.as_view(), name='getname'),
-    ##path('fantasticApp/getnam/<str>/', views.getPostNameView.as_view(), name='getpostname'),
     path('fantasticApp/setup/', views.setupView.as_view(), name='setup'),
     path('fantasticApp/newcat/<str:user_name>/', views.newcatView.as_view(), name='newcat'),
     path('fantasticApp/listcat/<str:user_name>/', views.listcatView.as_view(), name='listcat'),

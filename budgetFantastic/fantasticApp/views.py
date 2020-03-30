@@ -3,8 +3,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import FormView
 from fantasticApp.models import User, Category, Overall, Entry
-
-from .forms import NameForm, AddCatForm
+from .forms import NameForm, AddCatForm, NewEntryForm
 
 class indexView(generic.ListView):
     template_name = 'fantasticApp/index.html'
@@ -58,7 +57,7 @@ class catdetailView(generic.DetailView):
     template_name = 'fantasticApp/catdetail.html'
     
     def post(self, request, category_name):
-        form_one = AddCatForm()
+        form_one = NewEntryForm()
         user_ = request.GET['user_name']
         cat_name = category_name
         return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name, 'user_name' : user_ })                

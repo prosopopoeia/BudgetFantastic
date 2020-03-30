@@ -6,19 +6,8 @@ class NameForm(forms.Form):
     
 class AddCatForm(forms.Form):
     category_name = forms.CharField(max_length=100, label="Add New Category")
-   
+    
 class NewEntryForm(forms.Form):
-    entry_amount = forms.CharField(max_length=100, label="Add Amount") 
-    notes = forms.CharField(max_length=100, label="transaction note")
-    
-    
-   
-
-   
-# class ContactForm(forms.Form):
-    # subject = forms.CharField(max_length=100)
-    # message = forms.CharField(widget=forms.Textarea)
-    # sender = forms.EmailField()
-    # cc_self = forms.BooleanField(required=False)
-    
+    entry_amt = forms.CharField(max_length=100, label="Add Amount")
+    notes = forms.CharField(max_length=100, label="transaction notes")
     
