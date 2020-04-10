@@ -58,9 +58,21 @@ class catdetailView(generic.DetailView):
     
     def post(self, request, category_name):
         form_one = NewEntryForm()
-        user_ = request.GET['user_name']
+        user_string = request.GET['user_name']
+        user_ = User.objects.all()
         cat_name = category_name
-        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name, 'user_name' : user_ })                
+        current_category =  Category.objects.get(category_name = cat_name)
+        
+        current_entry = Entry()
+        try:
+            current_entry.amount = request.POST['entry_amt']
+            current_entry.entry_note = request.POST['notes']
+            current_entry.cat = current_category
+            current_entry.save()
+        except :
+            current_entry.cat = current_category
+            current_entry.save()
+        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : current_category})                
         
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'

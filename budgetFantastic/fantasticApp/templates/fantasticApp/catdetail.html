@@ -1,11 +1,41 @@
 {% extends 'fantasticApp/base.html' %}
 
 {% block header_text %}Famous Budget Application {% endblock %}
-{% block name_text %} {{ category_name }} - {{ user_name }}{% endblock %}
+{% block name_text %} {{ category_name }} - {{ user_name}}{% endblock %}
 
-{% block optional_item2 %}{{ category_name }}{% endblock %}
+{% block optional_item2 %}{{ category_name }} - Add Transaction{% endblock %}
 {% block form_action %} {% endblock %}
-{% block optional_action %}{% url 'fantasticApp:index'  %}{% endblock %}
+{% block optional_action %}{% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}{% endblock %}
+{% block optional_item_header %}Add New {{ category_name }} Entry{% endblock %}
 {% block optional_item %}{{ form_one }}{% endblock %}
 {% block button_two %}<input type="submit" value="record entry">{% endblock %}
+
+
+{% block list_loop %} 
+<table id="id_list_cats" class="table">
+    {% for ent in cat.entry_set.all %}
+	<tr>
+		<td>
+		<table id="id_inner_entry" class="table">
+			<tr>
+				<td>Item</td>
+				<td>Amount</td>
+				<td>Date</td>
+			</tr>
+			<tr>
+				<td>{{ ent.cat.category_name }}</td>
+				<td>{{ ent.amount }} </td>		
+				<td>{{ ent.transaction_date }}</td>	
+			</tr>
+			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}">
+				<input type="submit" value="Category Detail" name="cat_detail" id="id_cat_detail">
+				{% csrf_token %}
+			</form>
+		</td>
+	</tr>
+</table>
+    {% endfor %}
+{% endblock %}
+
+
 
