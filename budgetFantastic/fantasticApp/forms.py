@@ -11,3 +11,6 @@ class NewEntryForm(forms.Form):
     entry_amt = forms.CharField(max_length=100, label="Add Amount")
     notes = forms.CharField(max_length=100, label="transaction notes")
     
+# class crudEntryForm(forms.Form):
+    
+    

@@ -63,7 +63,10 @@ class catdetailView(generic.DetailView):
         cat_name = category_name
         current_category =  Category.objects.get(category_name = cat_name)
         
-        current_entry = Entry()
+        try:
+            current_entry = Entry.objects.get(ent_id)
+        except:
+            current_entry = Entry()
         try:
             current_entry.amount = request.POST['entry_amt']
             current_entry.entry_note = request.POST['notes']
