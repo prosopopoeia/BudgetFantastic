@@ -20,7 +20,7 @@ from . import views
 app_name = 'fantasticApp'
 urlpatterns = [
     path('', views.indexView.as_view(), name='index'),
-    path('fantasticApp/detail/', views.otherView.as_view(), name='detail'),
+    #path('fantasticApp/detail/', views.otherView.as_view(), name='detail'),
     path('fantasticApp/getname/', views.getNameView.as_view(), name='getname'),
     path('fantasticApp/setup/', views.setupView.as_view(), name='setup'),
     path('fantasticApp/newcat/<str:user_name>/', views.newcatView.as_view(), name='newcat'),

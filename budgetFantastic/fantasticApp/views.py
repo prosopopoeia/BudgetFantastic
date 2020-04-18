@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.views import generic
 from django.views.generic.edit import FormView
 from fantasticApp.models import User, Category, Overall, Entry
@@ -12,16 +13,6 @@ class indexView(generic.ListView):
     def get(self, request, *args, **kwargs):
         form_one = NameForm()
         return render(request, self.template_name, {'form_one': form_one})
-     
-        
-class otherView(generic.DetailView):
-    template_name = 'fantasticApp/detail.html'
-    context_object_name = 'box_contents'
-    
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'box_contents': args})
-
-
         
 class newcatView(generic.TemplateView):
     template_name = 'fantasticApp/newcat.html'
@@ -86,11 +77,12 @@ class getNameView(generic.DetailView):
         namer = request.POST['users_name']        
         try:
             user=User.objects.get(user_name=namer)
+            return HttpResponse("Hello, this is an existing user name %s" % user.id)
+            #return HttpResponseRedirect(reverse('fantasticApp:listcat', namer))
         except User.DoesNotExist:
             user = User.objects.create(user_name = namer)
             
-        return render(request, self.template_name, {'form_one': form_one, 'user' : user})  
-    
+        return render(request, self.template_name, {'form_one': form_one, 'user' : user})      
     
     
 class setupView(generic.ListView):
