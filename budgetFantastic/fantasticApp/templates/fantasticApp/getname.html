@@ -4,7 +4,9 @@
 {% block header_text %}Fantastic.{% endblock %}
 {% block name_text %} Hello {{ user.user_name }} {% endblock %}
 {% block form_one %}{{ form_one }}{% endblock %}
-{% block button_one %}<input type="submit" value="add">{% endblock %}
+{% block button_one %}
+	<input type="submit" value="add">			
+{% endblock %}
 {% block form_action %}{%  url 'fantasticApp:listcat'  user.user_name %}{% endblock %}
 {% block form_two %}
 {{ form_two }}
