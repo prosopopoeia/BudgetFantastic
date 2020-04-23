@@ -3,6 +3,6 @@
 {% block header_text %}Famous Budget Application {% endblock %}
 {% block name_text %} {{ user_name }}'s Added Category {% endblock %}
 {% block form_one %}{{ form_one }}{% endblock %}
-{% block optional_item2 %}{{ new_cat }}{% endblock %}
+<!-- {% block optional_item2 %}{{ new_cat }}{% endblock %} -->
 {% block form_action %} {%  url 'fantasticApp:listcat'  user_name  %}{% endblock %}
 {% block optional_item %}<button name='new_cat' type=submit  value="press" action=POST>{% endblock %}

@@ -16,67 +16,20 @@ class indexView(generic.ListView):
                 
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'
-    existing_user_template =  'fantasticApp/catlist.html'
+    existing_user_template =  'fantasticApp/newcat.html'
     #context_object_name = 'user'
     
     def post(self, request):
         form_one = AddCatForm()
+        form_two = NewEntryForm()
         namer = request.POST['users_name']
         try:
-            user_=User.objects.get(user_name=namer)           
-            #return HttpResponse("Hello, this is an existing user name %s" % user.id)
-            return render(request, self.existing_user_template, {'form_one' : form_one, 'current_user' : user_, 'user_name' : namer }    )
+            user_=User.objects.get(user_name=namer)
+            return render(request, self.existing_user_template, {'form_one' : form_one, 'form_two' : form_two, 'current_user' : user_, 'user_name' : namer }    )
         except User.DoesNotExist:
             user = User.objects.create(user_name = namer)            
-        return render(request, self.template_name, {'form_one': form_one, 'user' : user})      
+        return render(request, self.template_name, {'form_one': form_one, 'user' : user, 'user_name' : namer})      
 
-class catlistView(View):
-    template_name = 'fantasticApp/catlist.html'
-    # #model = Category
-    # context_object_name = 'users_categories'
-    
-    def post(self, request, users_name):
-        usenam = request.POST['user_name']
-        user_  = User.objects.get(user_name=usenam)
-        form_one = AddCatForm()
-        
-        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : users_name })
-        
-    # def get_queryset(self):   
-        # return Category.objects.get()
-        
-    def get(self, request, users_name):
-        user_  = User.objects.get(user_name=users_name)
-        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : users_name })
-            
-
-
-
-class listcatView(generic.ListView):
-    template_name = 'fantasticApp/catlist.html'
-    model = Category    
-    
-    def get(self, request):
-        use_name = request.GET['user_name']
-        user_ = User.objects.get(user_name=use_name)
-        return HttpResponse("Hello, this is an existing user name %s" % user.id)
-        #return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : use_name })        
-        
-    def post(self, request, user_name):
-    #def post(self, request):
-        form_one = AddCatForm()
-        #user_name=request.POST['user_name']
-        cat_name = request.POST['category_name']
-        user_=User.objects.get(user_name=user_name)
-                
-        new_category = Category()
-        new_category.category_name = cat_name
-        new_category.owningUser = user_   
-        new_category.save()    
-        #cats =  User.objects.all()
-        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })        
-
-##class addNewCatView(generic.
 class catdetailView(generic.DetailView):
     template_name = 'fantasticApp/catdetail.html'
     
@@ -100,6 +53,55 @@ class catdetailView(generic.DetailView):
             current_entry.cat = current_category
             current_entry.save()
         return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : current_category})                    
+
+class catlistView(View):
+    template_name = 'fantasticApp/catlist.html'
+
+    def post(self, request, users_name):
+        usenam = request.POST['user_name']
+        user_  = User.objects.get(user_name=usenam)
+        form_one = AddCatForm()       
+        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : users_name })
+        
+    def get(self, request, users_name):
+        user_  = User.objects.get(user_name=users_name)
+        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : users_name })
+
+class listcatView(generic.ListView):
+    template_name = 'fantasticApp/catlist.html'
+    model = Category    
+    
+    def get(self, request):
+        use_name = request.GET['user_name']
+        user_ = User.objects.get(user_name=use_name)
+        return HttpResponse("Hello, this is an existing user name %s" % user.id)
+        #return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : use_name })        
+        
+    def post(self, request, user_name):
+    #def post(self, request):
+        form_one = AddCatForm()
+        #user_name=request.POST['user_name']
+        cat_name = request.POST['category_name']
+        user_=User.objects.get(user_name=user_name)
+                
+        new_category = Category()
+        new_category.category_name = cat_name
+        new_category.owningUser = user_   
+        new_category.save()    
+        
+        current_entry = Entry()
+        current_entry.amount = request.POST['category_amount']
+        current_entry.entry_note = request.POST['category_notes']
+        current_entry.cat = new_category
+        current_entry.save()
+
+        #cats =  User.objects.all()
+        return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })        
+
+
+
+
+
     
 class setupView(generic.ListView):
     template_name = 'fantasticApp/setup.html'
@@ -117,7 +119,8 @@ class setupView(generic.ListView):
     
 class newcatView(generic.TemplateView):
     template_name = 'fantasticApp/newcat.html'
-    model = Category    
+    ##model = Category    
+    
     def post(self, request, user_name):
         form_one = AddCatForm()
         cat_name = request.POST['category_name']
@@ -132,17 +135,17 @@ class newcatView(generic.TemplateView):
     
     
     
-class getPostNameView(generic.DetailView):
-    template_name = 'fantasticApp/getname.html'
-   # context_object_name = 'some_name'
+# class getPostNameView(generic.DetailView):
+    # template_name = 'fantasticApp/getname.html'
+   # # context_object_name = 'some_name'
     
-    def post(self, request, nameer = 'Bill'):
-        if request.method == 'POST':
-            form = NameForm(request.POST)
-            if form.is_valid():
-                namer = nameer
-            else:
-                namer = nameer
+    # def post(self, request, nameer = 'Bill'):
+        # if request.method == 'POST':
+            # form = NameForm(request.POST)
+            # if form.is_valid():
+                # namer = nameer
+            # else:
+                # namer = nameer
                 
-        return render(request, self.template_name, {'form': form, 'users_name' : namer})  
-            
+        # return render(request, self.template_name, {'form': form, 'users_name' : namer})  
+ 
