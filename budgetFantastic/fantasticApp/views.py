@@ -30,30 +30,6 @@ class getNameView(generic.DetailView):
             user = User.objects.create(user_name = namer)            
         return render(request, self.template_name, {'form_one': form_one, 'user' : user, 'user_name' : namer})      
 
-class catdetailView(generic.DetailView):
-    template_name = 'fantasticApp/catdetail.html'
-    
-    def post(self, request, category_name):
-        form_one = NewEntryForm()
-        user_string = request.GET['user_name']
-        user_ = User.objects.all()
-        cat_name = category_name
-        current_category =  Category.objects.get(category_name = cat_name)
-        
-        try:
-            current_entry = Entry.objects.get(ent_id)
-        except:
-            current_entry = Entry()
-        try:
-            current_entry.amount = request.POST['entry_amt']
-            current_entry.entry_note = request.POST['notes']
-            current_entry.cat = current_category
-            current_entry.save()
-        except :
-            current_entry.cat = current_category
-            current_entry.save()
-        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : cat_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : current_category})                    
-
 class catlistView(View):
     template_name = 'fantasticApp/catlist.html'
 
@@ -78,9 +54,7 @@ class listcatView(generic.ListView):
         #return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : use_name })        
         
     def post(self, request, user_name):
-    #def post(self, request):
         form_one = AddCatForm()
-        #user_name=request.POST['user_name']
         cat_name = request.POST['category_name']
         user_=User.objects.get(user_name=user_name)
                 
@@ -95,9 +69,40 @@ class listcatView(generic.ListView):
         current_entry.cat = new_category
         current_entry.save()
 
-        #cats =  User.objects.all()
         return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })        
 
+class catdetailView(generic.DetailView):
+    template_name = 'fantasticApp/catdetail.html'
+    
+    def post(self, request, category_name):
+        form_one = NewEntryForm()
+        user_string = request.GET['user_name']
+        user_ = User.objects.get(user_name=user_string)
+                
+        try:
+            cat_set = Category.objects.get(owningUser=user_, category_name=category_name)
+            new_category = cat_set
+        except Category.DoesNotExist:
+            new_category = Category()
+        #new_category = Category()
+        #new_category = Category()
+            new_category.category_name = category_name
+            new_category.owningUser = user_   
+            new_category.save()    
+        
+        # try:
+        #current_entry = Entry.objects.get(ent_id)
+        # except:
+        # current_entry = Entry()
+        # # try:
+        # current_entry.amount = request.POST['category_amount']
+        # current_entry.entry_note = request.POST['category_notes']
+        # current_entry.cat = new_category
+        # current_entry.save()
+        # except :
+            # current_entry.cat = current_category
+            # current_entry.save()
+        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category})                    
 
 
 

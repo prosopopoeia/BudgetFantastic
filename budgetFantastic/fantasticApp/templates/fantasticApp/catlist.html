@@ -4,7 +4,7 @@
 {% block name_text %} {{ user_name }}'s Added Category {% endblock %}
 {% block form_one %}{{ form_one }}{% endblock %}
 {% block form_two %}
-	{{ form_two }}
+	
 {% endblock %}
 {% block optional_item2 %}
 <!-- <table id="id_list_cats" class="table"> -->
@@ -17,12 +17,11 @@
 	<tr>
 		<td>
 			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}">
-				{{ cat.category_name }}  <input type="submit" value="Category Detail" name="cat_detail" id="id_cat_detail">
-				{{ cat.overall_total }}
-				{{ cat.monthy_total }}
+				<input type="submit" value="view {{ cat.category_name }}" name="category_detail" id="id_cat_detail">
+				
 				{% csrf_token %}
 			</form>
-		</td>
+		</td><td>{{ cat.overall_total }}</td><td>{{ cat.monthy_total }}</td>
 	</tr>
     {% endfor %}
 {% endblock %}
