@@ -47,6 +47,7 @@ class listcatView(generic.ListView):
     template_name = 'fantasticApp/catlist.html'
     model = Category    
     
+    ##is this get function used? determine this at some point in the TBD.
     def get(self, request):
         use_name = request.GET['user_name']
         user_ = User.objects.get(user_name=use_name)
@@ -82,27 +83,27 @@ class catdetailView(generic.DetailView):
         try:
             cat_set = Category.objects.get(owningUser=user_, category_name=category_name)
             new_category = cat_set
+            
         except Category.DoesNotExist:
             new_category = Category()
-        #new_category = Category()
-        #new_category = Category()
             new_category.category_name = category_name
             new_category.owningUser = user_   
             new_category.save()    
+            
+        fail_string = ''
+        try:
+            entry_amt = request.POST['entry_amt']
+            entry_note = request.POST['notes']
+            current_entry = Entry()            
+            current_entry.amount = entry_amt
+            current_entry.entry_note = entry_note
+            current_entry.cat = cat_set
+            current_entry.save()
+            u_string = 'try works, made new entry with meaning'
+        except:
+            fail_string = 'fail, meaningless entry'
         
-        # try:
-        #current_entry = Entry.objects.get(ent_id)
-        # except:
-        # current_entry = Entry()
-        # # try:
-        # current_entry.amount = request.POST['category_amount']
-        # current_entry.entry_note = request.POST['category_notes']
-        # current_entry.cat = new_category
-        # current_entry.save()
-        # except :
-            # current_entry.cat = current_category
-            # current_entry.save()
-        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category})                    
+        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category, 'fail_notification' : fail_string})                    
 
 
 
