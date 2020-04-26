@@ -16,16 +16,16 @@ class indexView(generic.ListView):
                 
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'
-    existing_user_template =  'fantasticApp/newcat.html'
+    existing_user_template =  'fantasticApp/catlist.html'
     #context_object_name = 'user'
     
     def post(self, request):
         form_one = AddCatForm()
-        form_two = NewEntryForm()
+        #form_two = NewEntryForm()
         namer = request.POST['users_name']
         try:
             user_=User.objects.get(user_name=namer)
-            return render(request, self.existing_user_template, {'form_one' : form_one, 'form_two' : form_two, 'current_user' : user_, 'user_name' : namer }    )
+            return render(request, self.existing_user_template, {'form_one' : form_one, 'current_user' : user_, 'user_name' : namer }    )
         except User.DoesNotExist:
             user = User.objects.create(user_name = namer)            
         return render(request, self.template_name, {'form_one': form_one, 'user' : user, 'user_name' : namer})      
