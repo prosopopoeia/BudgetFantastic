@@ -17,7 +17,6 @@ class indexView(generic.ListView):
 class getNameView(generic.DetailView):
     template_name = 'fantasticApp/getname.html'
     existing_user_template =  'fantasticApp/catlist.html'
-    #context_object_name = 'user'
     
     def post(self, request):
         form_one = AddCatForm()

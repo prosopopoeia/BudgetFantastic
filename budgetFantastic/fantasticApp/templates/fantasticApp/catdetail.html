@@ -6,7 +6,6 @@
 {% block optional_item2 %}Transaction Information -  {{ category_name }} {% endblock %}
 {% block form_action %} {% endblock %}
 {% block optional_action %}{% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}{% endblock %}
-{% block optional_item_header %}Add New {{ category_name }} Entry{% endblock %}
 {% block optional_item %}{{ form_one }}{% endblock %}
 {% block button_two %}<input type="submit" value="record entry">{% endblock %}
 

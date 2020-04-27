@@ -11,18 +11,29 @@
 	
 <!-- </table> -->
 {% endblock %}
-
+<table>
 {% block list_loop %}
     {% for cat in current_user.category_set.all %}
+	<tr><td><hr class="shadow p-1 mb-3 bg-white rounded" /></td></tr>
 	<tr>
 		<td>
+		
 			<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}">
 				<input type="submit" value="view {{ cat.category_name }}" name="category_detail" id="id_cat_detail">
 				
 				{% csrf_token %}
 			</form>
-		</td><td>{{ cat.overall_total }}</td><td>{{ cat.monthy_total }}</td>
+		
+		</td>
 	</tr>
+	<tr><td><hr /></td></tr>
+	<tr><td>Overall, All Time, Total!:{{ cat.overall_total }}</td></tr>
+	<tr><td><hr /></td></tr>
+	<tr><td>Monthly Total:{{ cat.monthly_total  }}</td></tr>
+	<tr><td><hr /></td></tr>
+	
+	
     {% endfor %}
 {% endblock %}
+</table>
 {% block button_one %}<input type="submit" value="add">{% endblock %}

@@ -26,38 +26,23 @@
 					</form>
 				</div>
 			</div>
-			<div class="col-md-10 col-md-offset-3 jumbotron">
-				<div class="text-center">
-					<div id='option2'>
-						<h3 class="display-5"> {% block optional_item2 %}{% endblock %}</h3>
-					</div>
-				</div>
-			</div>
-			<div class="alert alert-primary">
-				<h3 class="display-5"> {% block optional_item_header %}{% endblock %}</h3>
-			</div>
-			<div class="alert alert-dark" role="alert" class="container">
+			<div class="alert alert-dark col-md-10" role="alert" >
 				<form method="POST" action="{% block optional_action %}{% endblock %}">
 					{% csrf_token %}
 					{% block optional_item %}{% endblock %}
 					{% block button_two %}{% endblock %}
 				</form>
 			</div>
-		</div>
-		<div class="jumbotron">
-			{% block list_loop %} {% endblock %}
-		</div>
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				{% block form_two %}{% endblock %}
-				<form method="POST" action="{% block form_action2 %}{% endblock %}">
-					{% csrf_token %}
-				</form>
-				{% block table %} {% endblock %}
-		  
+			<div class="alert alert-primary col-md-10">
+				<h3 class="display-5"> {% block optional_item2 %}{% endblock %}</h3>
+				<h3 class="display-5"> {% block optional_item_header %}{% endblock %}</h3>
+				{% block list_loop %} {% endblock %}
 			</div>
-		</div>
 
+		</div>
+		<!-- <div class="jumbotron">
+			
+		</div> -->
     </div>
   </body>
 
