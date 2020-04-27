@@ -5,6 +5,7 @@ from django.views import generic, View
 from django.views.generic.edit import FormView
 from fantasticApp.models import User, Category, Overall, Entry
 from .forms import NameForm, AddCatForm, NewEntryForm
+from fantasticApp.utilFunctions import simpleMath
 
 class indexView(generic.ListView):
     template_name = 'fantasticApp/index.html'
@@ -61,11 +62,15 @@ class listcatView(generic.ListView):
         new_category = Category()
         new_category.category_name = cat_name
         new_category.owningUser = user_   
-        new_category.save()    
+        
         
         current_entry = Entry()
         current_entry.amount = request.POST['category_amount']
         current_entry.entry_note = request.POST['category_notes']
+        
+        new_category.monthly_total = request.POST['category_amount']
+        new_category.save()    
+        
         current_entry.cat = new_category
         current_entry.save()
 
@@ -93,14 +98,17 @@ class catdetailView(generic.DetailView):
         try:
             entry_amt = request.POST['entry_amt']
             entry_note = request.POST['notes']
+            fentry_amt = float(entry_amt)
             current_entry = Entry()            
             current_entry.amount = entry_amt
             current_entry.entry_note = entry_note
+            new_category.monthly_total += 300#fentry_amt
+            new_category.save()
             current_entry.cat = cat_set
             current_entry.save()
             u_string = 'try works, made new entry with meaning'
         except:
-            fail_string = 'fail, meaningless entry'
+            fail_string = 'fail, meaningless entry - ' + entry_amt +  str(type (fentry_amt))
         
         return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category, 'fail_notification' : fail_string})                    
 
