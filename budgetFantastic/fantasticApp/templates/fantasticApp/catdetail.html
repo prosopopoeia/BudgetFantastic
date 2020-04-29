@@ -1,7 +1,13 @@
 {% extends 'fantasticApp/base.html' %}
 
 {% block header_text %}Famous Budget Application {% endblock %}
-{% block name_text %} {{ user_name}} {{ fail_notification}}{% endblock %}
+{% block name_text %} {{ category_name}} {% endblock %}
+{% block optional_info_text %}  
+	<div>Monthly total: {{ cat.monthly_total }}</div>
+	<div>Lifetime total: {{ cat.overall_total }}</div>
+	<div>Previous monthly total: {{ cat.last_month_total }}</div>
+	<div>Total entries: {{ cat.total_entries }}</div>
+{% endblock %}
 
 {% block optional_item2 %}Transaction Information -  {{ category_name }} {% endblock %}
 {% block form_action %} {% endblock %}

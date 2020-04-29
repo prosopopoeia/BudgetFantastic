@@ -93,8 +93,7 @@ class catdetailView(generic.DetailView):
             new_category.category_name = category_name
             new_category.owningUser = user_   
             new_category.save()    
-            
-        fail_string = 'fail'
+                
         try:
             entry_amt = float(request.POST['entry_amt'])
             curr_mon_tot = float(new_category.monthly_total)
@@ -104,14 +103,15 @@ class catdetailView(generic.DetailView):
             current_entry.amount = entry_amt
             current_entry.entry_note = entry_note
             new_category.monthly_total = entry_amt + curr_mon_tot
+            new_category.total_entries += 1
             new_category.save()
             current_entry.cat = cat_set
             current_entry.save()
-            u_string = 'try works, made new entry with meaning'
+           
         except:
-            fail_string = 'fail, meaningless entry - ' + str(100)
+            log_string = 'first entry or failure'
         
-        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category, 'fail_notification' : fail_string})                    
+        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category})                    
 
 
 
