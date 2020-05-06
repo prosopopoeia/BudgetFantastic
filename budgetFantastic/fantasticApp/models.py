@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime 
+#from datetime import datetime   #I don't think this is needed
 from django.utils import timezone
     
 class User(models.Model):
@@ -27,3 +27,12 @@ class Entry(models.Model):
     entry_note=models.CharField(default='',max_length=11)
     amount = models.DecimalField(default=0, max_digits=11, decimal_places=2)
     transaction_date=models.DateTimeField('transaction date',default=timezone.now, blank=True)
+    
+    def is_current_month(self):
+        this_moment = timezone.now().month
+        return this_moment ==  transaction_date.month
+    
+    def __str__(self):
+        return self.entry_note
+        
+    

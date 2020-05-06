@@ -1,15 +1,17 @@
 {% extends 'fantasticApp/base.html' %}
 
 {% block header_text %}Famous Budget Application {% endblock %}
-{% block name_text %} {{ category_name}} {% endblock %}
+{% block name_text %} {{ cat.category_name}} {% endblock %}
 {% block optional_info_text %}  
 	<div>Monthly total: {{ cat.monthly_total }}</div>
+	<div>Month-to-month average {{ cat.monthly_total }}</div>
+	<div>Average entry amount: {{ avg_entry}}</div>
 	<div>Lifetime total: {{ cat.overall_total }}</div>
-	<div>Previous monthly total: {{ cat.last_month_total }}</div>
-	<div>Total entries: {{ cat.total_entries }}</div>
+	<div>Previous monthly total: {{ mo_stats.prev_total}} </div>
+	<div>Total entries: {{ mo_stats.monthly_total}}</div>
 {% endblock %}
 
-{% block optional_item2 %}Transaction Information -  {{ category_name }} {% endblock %}
+{% block optional_item2 %}Transaction Information -  {{ cat.category_name }} {% endblock %}
 {% block form_action %} {% endblock %}
 {% block optional_action %}{% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}{% endblock %}
 {% block optional_item %}{{ form_one }}{% endblock %}
@@ -18,7 +20,10 @@
 
 {% block list_loop %} 
 <table id="id_list_cats" class="table">
-    {% for ent in cat.entry_set.all %}
+
+	<tr><td><br /><br />top. </td></tr>
+	
+	{% for ent in selected_entries %}
 	<tr>
 		<td>
 		<form method="Post" action=" {% url 'fantasticApp:catdetail' cat.category_name %}?user_name={{ user_name }}">
@@ -42,15 +47,17 @@
 				<td>{{ ent.cat.category_name }}</td>
 				<td>{{ ent.amount }} </td>		
 				<td>{{ ent.transaction_date }}</td>	
-				<td>{{ ent.entry_note }}</td>
+				<td>{{ ent.entry_note }}  {{  object.entry_note }}  </td>
 			</tr>
 		</table>
 			
 			
 		</td>
 	</tr>
+	{% endfor %}
+	
 </table>
-    {% endfor %}
+
 {% endblock %}
 
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic, View
@@ -6,10 +6,11 @@ from django.views.generic.edit import FormView
 from fantasticApp.models import User, Category, Overall, Entry
 from .forms import NameForm, AddCatForm, NewEntryForm
 from fantasticApp.utilFunctions import simpleMath
+from django.utils import timezone
 
 class indexView(generic.ListView):
     template_name = 'fantasticApp/index.html'
-    context_object_name = 'users_name'        
+    #context_object_name = 'users_name'        
     
     def get(self, request, *args, **kwargs):
         form_one = NameForm()
@@ -45,7 +46,7 @@ class catlistView(View):
 
 class listcatView(generic.ListView):
     template_name = 'fantasticApp/catlist.html'
-    model = Category    
+    
     
     ##is this get function used? determine this at some point in the TBD.
     def get(self, request):
@@ -69,6 +70,7 @@ class listcatView(generic.ListView):
         current_entry.entry_note = request.POST['category_notes']
         
         new_category.monthly_total = request.POST['category_amount']
+        new_category.total_entries += 1
         new_category.save()    
         
         current_entry.cat = new_category
@@ -76,14 +78,15 @@ class listcatView(generic.ListView):
 
         return render(request, self.template_name, {'form_one' : form_one, 'current_user' : user_, 'user_name' : user_name })        
 
-class catdetailView(generic.DetailView):
+class catdetailView(generic.ListView):
     template_name = 'fantasticApp/catdetail.html'
     
     def post(self, request, category_name):
         form_one = NewEntryForm()
         user_string = request.GET['user_name']
         user_ = User.objects.get(user_name=user_string)
-                
+        avg_entry = 0   
+        
         try:
             cat_set = Category.objects.get(owningUser=user_, category_name=category_name)
             new_category = cat_set
@@ -95,31 +98,35 @@ class catdetailView(generic.DetailView):
             new_category.save()    
                 
         try:
-            entry_amt = float(request.POST['entry_amt'])
-            curr_mon_tot = float(new_category.monthly_total)
+            entry_amt = float(request.POST['entry_amt'])                #amount of the entry
+            curr_mon_tot = float(new_category.monthly_total)       # current monthly total
             entry_note = request.POST['notes']
-            fentry_amt = float(entry_amt)
-            current_entry = Entry()            
+            current_entry = Entry()
             current_entry.amount = entry_amt
             current_entry.entry_note = entry_note
             new_category.monthly_total = entry_amt + curr_mon_tot
             new_category.total_entries += 1
+            monthly_avg = new_category.monthly_total
+            avg_entry = int(new_category.monthly_total/ new_category.total_entries)
             new_category.save()
-            current_entry.cat = cat_set
+            current_entry.cat = new_category
             current_entry.save()
            
         except:
             log_string = 'first entry or failure'
+            
+        #get all entries from this month 
+        many_entries = Entry.objects.filter(cat = new_category, transaction_date__month = (timezone.now().month )) 
+        monthly_stats = {'monthly_total' : 10, 'prev_total' : '666'}
         
-        return render(request, self.template_name, {'form_one' : form_one, 'category_name' : category_name, 'user_name' : user_string, 'user_' : user_ , 'cat' : new_category})                    
-
-
-
-
+        return render(request, self.template_name, {'mo_stats': monthly_stats, 'form_one' : form_one, 'avg_entry' : avg_entry, 'user_name' : user_string,  'cat' : new_category, 'selected_entries' : many_entries})                    
     
 class setupView(generic.ListView):
     template_name = 'fantasticApp/setup.html'
     model = Category
+    
+    
+    
     def post(self, request):
         namer = request.POST['category_name']
         user_ =  User.objects.create(user_name='bill')

@@ -8,24 +8,29 @@ class BasicTests(TestCase):
 
     #user can visit index
     
-    def test_index_exists(self):
-        response = self.client.get('/')
-        self.assertTemplateUsed(response, 'fantasticApp/index.html')
-        #self.assertRedirects(response, '/fantasticApp/', status_code=301)
+    # def test_index_exists(self):
+        # response = self.client.get('/')
+        # self.assertTemplateUsed(response, 'fantasticApp/index.html')
+        # #self.assertRedirects(response, '/fantasticApp/', status_code=301)
     
-    def test_can_save_category(self):
-        self.client.post('/fantasticApp/setup/', data={'item_text': 'cat1'})        
-        self.assertEqual(Category.objects.count(), 1)
-        current_cat = Category.objects.first()
-        self.assertEqual(current_cat.category_name, 'cat1')
+    # def test_can_save_category(self):
+        # self.client.post('/fantasticApp/setup/', data={'item_text': 'cat1'})        
+        # self.assertEqual(Category.objects.count(), 1)
+        # current_cat = Category.objects.first()
+        # self.assertEqual(current_cat.category_name, 'cat1')
        
-    def test_can_get_and_save_username(self):
-        response =  self.client.post('/fantasticApp/getname/', data={'item_text': 'kimbal'})
-        this_users_name = User.objects.first()
-        self.assertEqual(this_users_name.user_name, 'kimbal')
+    # def test_can_get_and_save_username(self):
+        # response =  self.client.post('/fantasticApp/getname/', data={'item_text': 'kimbal'})
+        # this_users_name = User.objects.first()
+        # self.assertEqual(this_users_name.user_name, 'kimbal')
         
         
-    def test_can_create_category(self):   
-         self.clent.post('/fantasticApp/newcat')
+    # def test_can_create_category(self):   
+         # self.clent.post('/fantasticApp/newcat')
+         
+         
+     def test_can_add_to_total(self):
+         response = self.client.post('/fantasticApp/catdetail/?user_name=Weird Stash', data{'category_name' : 'sticks'}
+         
          
     
